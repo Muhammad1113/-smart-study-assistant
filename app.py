@@ -246,7 +246,7 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM history WHERE id=? AND user_id=?', (id, session['user_id']))
     db.commit()
-    db.close()
+    db.close()`
     return redirect(url_for('dashboard'))
 
 @app.route('/logout')
@@ -254,6 +254,6 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-if __name__ == '__main__':
-    init_db()
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
