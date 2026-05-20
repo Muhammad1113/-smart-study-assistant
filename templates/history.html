@@ -1,0 +1,29 @@
+<div class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <h2>History</h2>
+
+        <button onclick="toggleSidebar()">
+            ✕
+        </button>
+
+    </div>
+
+    <div class="sidebar-body">
+
+        {% for record in records %}
+
+        <div class="history-card">
+
+            <h4>{{ record['query'] }}</h4>
+
+            <p>{{ record['response'] }}</p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
