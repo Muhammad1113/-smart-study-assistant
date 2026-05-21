@@ -2,6 +2,7 @@
 <html data-theme="light">
 <head>
     <title>Study Assistant — Qasim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
     <style>
@@ -32,6 +33,7 @@
             --code-text:     #e2e0fa;
             --sidebar-w:     268px;
             --nav-h:         54px;
+            --input-h:       130px;
         }
         [data-theme="dark"] {
             --bg:            #141416;
@@ -58,13 +60,16 @@
             --code-text:     #ddd8ff;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg);
             color: var(--text);
-            height: 100vh;
             display: flex;
-            overflow: hidden;
             transition: background .25s, color .25s;
         }
 
@@ -72,7 +77,9 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 
-        /* SIDEBAR */
+        /* ══════════════════════════════
+           SIDEBAR
+        ══════════════════════════════ */
         .sidebar {
             width: var(--sidebar-w);
             background: var(--sidebar);
@@ -80,12 +87,15 @@
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            transition: background .25s, transform .3s cubic-bezier(.4,0,.2,1);
+            height: 100vh;
+            transition: background .25s;
             z-index: 20;
         }
+
         .brand {
             display: flex; align-items: center; gap: 10px;
             padding: 16px 16px 10px;
+            flex-shrink: 0;
         }
         .brand-mark {
             width: 32px; height: 32px;
@@ -111,16 +121,20 @@
             font-family: 'DM Sans', sans-serif;
             font-size: 13px; font-weight: 600;
             transition: background .18s, transform .15s;
+            flex-shrink: 0;
         }
         .btn-new:hover { background: var(--accent2); transform: translateY(-1px); }
         .btn-new svg { width: 14px; height: 14px; flex-shrink: 0; }
-        .sb-search { position: relative; margin: 0 10px 8px; }
+
+        .sb-search { position: relative; margin: 0 10px 8px; flex-shrink: 0; }
         .sb-search svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--text3); pointer-events: none; }
         .sb-search input { width: 100%; padding: 7px 10px 7px 30px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .2s; }
         .sb-search input:focus { border-color: var(--accent); }
         .sb-search input::placeholder { color: var(--text3); }
-        .sb-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 8px 16px 4px; }
+
+        .sb-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 8px 16px 4px; flex-shrink: 0; }
         .sb-list { flex: 1; overflow-y: auto; padding: 0 6px 6px; }
+
         .sb-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; cursor: pointer; text-decoration: none; color: var(--text); transition: background .15s; margin-bottom: 1px; position: relative; }
         .sb-item:hover { background: var(--accent-dim); }
         .sb-item.active { background: var(--accent-dim); }
@@ -139,48 +153,76 @@
         .sb-empty { text-align: center; padding: 2rem 1rem; color: var(--text3); font-size: 12px; }
         .no-results { display: none; text-align: center; padding: 1rem; color: var(--text3); font-size: 12px; }
         .no-results.show { display: block; }
-        .sb-footer { border-top: 1px solid var(--border); padding: 10px; }
+
+        .sb-footer { border-top: 1px solid var(--border); padding: 10px; flex-shrink: 0; }
         .sb-user { display: flex; align-items: center; gap: 9px; padding: 7px 8px; border-radius: 9px; }
         .sb-av { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .sb-uname { font-size: 13px; font-weight: 600; flex: 1; color: var(--text); }
+        .sb-uname { font-size: 13px; font-weight: 600; flex: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .btn-icon { width: 28px; height: 28px; border-radius: 7px; border: 1px solid var(--border); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text2); transition: all .15s; flex-shrink: 0; }
         .btn-icon svg { width: 14px; height: 14px; }
         .btn-icon:hover { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
-        .btn-logout { font-size: 11px; font-weight: 600; color: var(--text3); text-decoration: none; padding: 5px 9px; border-radius: 7px; border: 1px solid var(--border); transition: all .15s; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+        .btn-logout { font-size: 11px; font-weight: 600; color: var(--text3); text-decoration: none; padding: 5px 9px; border-radius: 7px; border: 1px solid var(--border); transition: all .15s; white-space: nowrap; display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
         .btn-logout svg { width: 12px; height: 12px; }
         .btn-logout:hover { background: var(--rose-dim); color: var(--rose); border-color: var(--rose); }
 
-        /* MAIN */
-        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--chat-bg); transition: background .25s; min-width: 0; }
-        .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.25rem; height: var(--nav-h); border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--chat-bg); transition: background .25s; }
-        .topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-        .topbar-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 420px; }
-        .menu-btn { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; width: 32px; height: 32px; align-items: center; justify-content: center; cursor: pointer; color: var(--text); flex-shrink: 0; }
-        .menu-btn svg { width: 16px; height: 16px; }
+        /* ══════════════════════════════
+           MAIN AREA
+        ══════════════════════════════ */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--chat-bg);
+            transition: background .25s;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 1.25rem;
+            height: var(--nav-h);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            background: var(--chat-bg);
+            transition: background .25s;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+        .topbar-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .menu-btn { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; color: var(--text); flex-shrink: 0; }
+        .menu-btn svg { width: 18px; height: 18px; }
         .topbar-right { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-        .btn-clear { display: flex; align-items: center; gap: 5px; font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--text2); background: none; border: 1px solid var(--border); border-radius: 8px; padding: 5px 11px; cursor: pointer; transition: all .15s; }
+        .btn-clear { display: flex; align-items: center; gap: 5px; font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--text2); background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: all .15s; white-space: nowrap; }
         .btn-clear svg { width: 13px; height: 13px; }
         .btn-clear:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-dim); }
 
-        /* CHAT AREA */
-        .chat-area { flex: 1; overflow-y: auto; padding: 1.5rem 1.25rem .75rem; }
+        /* ══════════════════════════════
+           CHAT AREA
+        ══════════════════════════════ */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem 1.25rem 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
         .chat-inner { max-width: 780px; margin: 0 auto; }
 
         /* EMPTY STATE */
-        .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 68vh; text-align: center; gap: 14px; }
+        .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; gap: 14px; }
         .empty-av { width: 72px; }
         .empty-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
         .empty-sub { font-size: 13px; color: var(--text2); max-width: 380px; line-height: 1.65; }
         .chips { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-top: 6px; }
-        .chip { display: flex; align-items: center; gap: 6px; padding: 7px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text2); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
+        .chip { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text2); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
         .chip svg { width: 13px; height: 13px; flex-shrink: 0; }
-        .chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+        .chip:hover, .chip:active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
         /* MESSAGES */
         @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
         .msg-group { margin-bottom: 1.75rem; animation: fadeUp .3s ease; }
         .msg-user { display: flex; justify-content: flex-end; margin-bottom: .6rem; }
-        .msg-user-bub { background: var(--accent); color: #fff; padding: 11px 16px; border-radius: 18px 18px 4px 18px; font-size: 13.5px; line-height: 1.6; max-width: 70%; }
+        .msg-user-bub { background: var(--accent); color: #fff; padding: 11px 16px; border-radius: 18px 18px 4px 18px; font-size: 13.5px; line-height: 1.6; max-width: 75%; word-break: break-word; }
         .msg-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .65; margin-bottom: 4px; }
         .msg-tag svg { width: 9px; height: 9px; }
         .msg-ai { display: flex; gap: 11px; align-items: flex-start; }
@@ -188,7 +230,7 @@
         .ai-body { flex: 1; min-width: 0; }
         .ai-label { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
         .ai-label span { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; display: inline-block; }
-        .ai-bub { background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; padding: 16px 18px; font-size: 13.5px; line-height: 1.85; color: var(--text); }
+        .ai-bub { background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; padding: 16px 18px; font-size: 13.5px; line-height: 1.85; color: var(--text); word-break: break-word; }
         .ai-bub h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin: 14px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
         .ai-bub h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); margin: 12px 0 5px; }
         .ai-bub p { margin-bottom: 10px; }
@@ -217,8 +259,8 @@
         .mcq-q { padding: 12px 14px; font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--border); background: var(--surface); }
         .mcq-q-num { font-size: 10px; font-weight: 700; color: var(--amber); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
         .mcq-opts { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
-        .mcq-opt { display: flex; align-items: center; gap: 9px; padding: 8px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12.5px; transition: all .15s; }
-        .mcq-opt:hover { border-color: var(--accent); background: var(--accent-dim); }
+        .mcq-opt { display: flex; align-items: center; gap: 9px; padding: 10px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12.5px; transition: all .15s; }
+        .mcq-opt:hover, .mcq-opt:active { border-color: var(--accent); background: var(--accent-dim); }
         .mcq-opt.revealed-correct { border-color: var(--teal); background: var(--teal-dim); color: var(--teal); }
         .mcq-opt.revealed-wrong { border-color: var(--border); opacity: .5; }
         .opt-l { width: 22px; height: 22px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; color: var(--text2); }
@@ -238,37 +280,47 @@
         .td:nth-child(2){animation-delay:.15s} .td:nth-child(3){animation-delay:.3s}
 
         .msg-foot { display: flex; align-items: center; gap: 12px; margin-top: 7px; }
-        .foot-btn { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); cursor: pointer; background: none; border: none; font-family: 'DM Sans',sans-serif; transition: color .15s; padding: 0; }
+        .foot-btn { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); cursor: pointer; background: none; border: none; font-family: 'DM Sans',sans-serif; transition: color .15s; padding: 4px 0; }
         .foot-btn svg { width: 12px; height: 12px; }
         .foot-btn:hover { color: var(--accent); }
-        .disclaimer { font-size: 11px; color: var(--text3); text-align: center; padding: 5px; }
+        .disclaimer { font-size: 11px; color: var(--text3); text-align: center; padding: 4px 1rem; flex-shrink: 0; }
 
-        /* INPUT AREA */
-        .input-area { flex-shrink: 0; padding: 0 1.25rem 1rem; background: var(--chat-bg); transition: background .25s; }
+        /* ══════════════════════════════
+           INPUT AREA
+        ══════════════════════════════ */
+        .input-area {
+            flex-shrink: 0;
+            padding: 8px 1.25rem 12px;
+            background: var(--chat-bg);
+            border-top: 1px solid var(--border);
+            transition: background .25s;
+        }
         .input-wrap { max-width: 780px; margin: 0 auto; }
-        .input-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 12px 14px; transition: border-color .2s, box-shadow .2s; }
+        .input-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 10px 12px; transition: border-color .2s, box-shadow .2s; }
         .input-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,70,229,.08); }
         .input-row { display: flex; gap: 9px; align-items: flex-end; }
-        .input-box textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-family: 'DM Sans',sans-serif; font-size: 14px; line-height: 1.6; resize: none; min-height: 44px; max-height: 130px; }
+        .input-box textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-family: 'DM Sans',sans-serif; font-size: 14px; line-height: 1.6; resize: none; min-height: 40px; max-height: 120px; }
         .input-box textarea::placeholder { color: var(--text3); }
-        .send-btn { flex-shrink: 0; display: flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .18s; white-space: nowrap; }
+        .send-btn { flex-shrink: 0; display: flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .18s; white-space: nowrap; }
         .send-btn:hover { background: var(--accent2); transform: translateY(-1px); }
         .send-btn:active { transform: scale(.97); }
         .send-btn svg { width: 14px; height: 14px; }
-        .mode-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 6px; }
-        .modes { display: flex; gap: 4px; flex-wrap: wrap; }
-        .mode-btn { display: flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border); background: transparent; font-size: 11.5px; font-weight: 500; color: var(--text2); cursor: pointer; font-family: 'DM Sans',sans-serif; transition: all .15s; }
+        .mode-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); gap: 6px; }
+        .modes { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .modes::-webkit-scrollbar { display: none; }
+        .mode-btn { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border); background: transparent; font-size: 11.5px; font-weight: 500; color: var(--text2); cursor: pointer; font-family: 'DM Sans',sans-serif; transition: all .15s; white-space: nowrap; flex-shrink: 0; }
         .mode-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
-        .mode-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+        .mode-btn:hover, .mode-btn:active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
         .mode-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); font-weight: 600; }
         .mode-btn.m-explanation.active,.mode-btn.m-explanation:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
         .mode-btn.m-mcq.active,.mode-btn.m-mcq:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
         .mode-btn.m-code.active,.mode-btn.m-code:hover { border-color: var(--violet); color: var(--violet); background: var(--violet-dim); }
         .mode-btn.m-factcheck.active,.mode-btn.m-factcheck:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-dim); }
         .input-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .wc,.sc { font-size: 10px; color: var(--text3); }
+        .wc { font-size: 10px; color: var(--text3); }
+        .sc { font-size: 10px; color: var(--text3); }
 
-        /* AVATAR */
+        /* AVATAR ANIMATIONS */
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
         @keyframes blink { 0%,84%,100%{transform:scaleY(1)} 88%{transform:scaleY(.08)} }
         @keyframes wave  { 0%,100%{transform:rotate(0)} 35%{transform:rotate(26deg)} 70%{transform:rotate(-8deg)} }
@@ -277,74 +329,114 @@
         .eye-r { animation: blink 4s .15s ease-in-out infinite; transform-origin: 106px 78px; }
 
         /* OVERLAY */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 15; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 15; backdrop-filter: blur(2px); }
         .overlay.show { display: block; }
 
         /* ══════════════════════════════
-           MOBILE RESPONSIVE
+           TABLET (768px - 1024px)
         ══════════════════════════════ */
-        @media(max-width:768px){
-            body { overflow: hidden; }
-
-            /* Sidebar slides in from left */
-            .sidebar {
-                position: fixed; top: 0; left: 0;
-                height: 100vh; width: 85vw; max-width: 300px;
-                transform: translateX(-100%);
-                z-index: 30;
-            }
-            .sidebar.open { transform: translateX(0); }
-            .menu-btn { display: flex !important; }
-
-            /* Main takes full width */
-            .main { width: 100%; }
-
-            /* Topbar */
-            .topbar { padding: 0 .75rem; }
-            .topbar-title { font-size: 13px; max-width: 180px; }
-
-            /* Chat area */
-            .chat-area { padding: 1rem .75rem .5rem; }
-            .msg-user-bub { max-width: 88%; font-size: 13px; }
-            .ai-bub { font-size: 13px; padding: 12px 14px; }
-
-            /* Empty state */
-            .empty { min-height: 50vh; gap: 10px; }
-            .empty-av { width: 55px; }
-            .empty-title { font-size: 1.2rem; }
-            .empty-sub { font-size: 12px; }
-            .chips { gap: 5px; }
-            .chip { font-size: 11px; padding: 6px 11px; }
-
-            /* INPUT — fixed at bottom on mobile */
-            .input-area {
-                position: fixed;
-                bottom: 0; left: 0; right: 0;
-                padding: .6rem .75rem .75rem;
-                background: var(--chat-bg);
-                border-top: 1px solid var(--border);
-                z-index: 10;
-            }
-
-            /* Extra bottom padding so chat doesn't hide behind input */
-            .chat-area { padding-bottom: 140px; }
-
-            /* Mode buttons scroll horizontally */
-            .modes { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
-            .modes::-webkit-scrollbar { height: 0; }
-            .mode-btn { white-space: nowrap; font-size: 11px; padding: 4px 9px; }
-
-            .input-meta .sc { display: none; }
-            .send-btn { padding: 9px 14px; font-size: 12px; }
-            .send-btn span { display: none; }
-
-            /* Hide word count on small screens */
-            .wc { display: none; }
+        @media (max-width: 1024px) {
+            :root { --sidebar-w: 230px; }
         }
 
-        @media(max-width:400px){
-            .topbar-title { max-width: 130px; }
+        /* ══════════════════════════════
+           MOBILE (max 768px)
+        ══════════════════════════════ */
+        @media (max-width: 768px) {
+
+            /* Sidebar: slide-in drawer */
+            .sidebar {
+                position: fixed;
+                top: 0; left: 0;
+                height: 100%;
+                width: 80vw;
+                max-width: 290px;
+                transform: translateX(-100%);
+                transition: transform .28s cubic-bezier(.4,0,.2,1), background .25s;
+                z-index: 30;
+                box-shadow: 4px 0 24px rgba(0,0,0,.15);
+            }
+            .sidebar.open { transform: translateX(0); }
+
+            /* Show hamburger */
+            .menu-btn { display: flex !important; }
+
+            /* Main: full width, flex column, fixed height */
+            .main {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Topbar */
+            .topbar { padding: 0 .75rem; height: 50px; }
+            .topbar-title { font-size: 13px; }
+
+            /* Chat scrollable area */
+            .chat-area {
+                flex: 1;
+                overflow-y: auto;
+                padding: 1rem .75rem .75rem;
+            }
+
+            /* Messages */
+            .msg-user-bub { max-width: 85%; font-size: 13px; padding: 10px 14px; }
+            .ai-bub { font-size: 13px; padding: 12px 13px; line-height: 1.75; }
+            .ai-icon { width: 30px; height: 30px; }
+            .msg-ai { gap: 8px; }
+
+            /* Empty state */
+            .empty { min-height: 50vh; gap: 10px; padding: 1rem; }
+            .empty-av { width: 58px; }
+            .empty-title { font-size: 1.25rem; }
+            .empty-sub { font-size: 12px; max-width: 280px; }
+            .chips { gap: 6px; }
+            .chip { font-size: 11.5px; padding: 7px 12px; }
+
+            /* Disclaimer */
+            .disclaimer { font-size: 10px; padding: 3px .75rem; }
+
+            /* Input area — part of flex flow, not fixed */
+            .input-area {
+                padding: 6px .75rem 10px;
+                flex-shrink: 0;
+            }
+
+            /* Input box */
+            .input-box { padding: 8px 10px; border-radius: 12px; }
+            .input-box textarea { font-size: 14px; min-height: 38px; max-height: 100px; }
+
+            /* Send button — icon only on mobile */
+            .send-btn { padding: 10px 12px; border-radius: 10px; }
+            .send-btn .send-label { display: none; }
+
+            /* Mode bar */
+            .mode-bar { margin-top: 7px; padding-top: 7px; }
+            .mode-btn { font-size: 11px; padding: 5px 9px; gap: 4px; }
+
+            /* Hide word count and shortcut */
+            .wc, .sc { display: none; }
+
+            /* Sidebar delete always visible on touch */
+            .sb-del { opacity: 1; }
+
+            /* MCQ options bigger tap target */
+            .mcq-opt { padding: 12px 11px; }
+        }
+
+        /* ══════════════════════════════
+           SMALL PHONES (max 400px)
+        ══════════════════════════════ */
+        @media (max-width: 400px) {
+            .topbar-title { font-size: 12px; }
             .empty-title { font-size: 1.1rem; }
+            .empty-sub { font-size: 11.5px; }
+            .chip { font-size: 11px; padding: 6px 10px; }
+            .mode-btn { font-size: 10.5px; padding: 4px 8px; }
+            .send-btn { padding: 9px 11px; }
+            .ai-bub { font-size: 12.5px; padding: 10px 11px; }
+            .msg-user-bub { font-size: 12.5px; }
         }
     </style>
 </head>
@@ -382,7 +474,8 @@
             {% for r in records %}
             <a href="/load_chat/{{ r['chat_session_id'] }}"
                class="sb-item {% if current_chat_id == r['chat_session_id'] %}active{% endif %}"
-               data-name="{{ (r['chat_name'] or r['query'])|lower }}">
+               data-name="{{ (r['chat_name'] or r['query'])|lower }}"
+               onclick="closeSidebar()">
                 <div class="sb-item-ic ic-{{ r['output_type'] }}">
                     {% if r['output_type'] == 'summary' %}
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -534,10 +627,10 @@
                 <div class="empty-sub">Your personal AI Study Assistant. Pick a mode below, type any topic, and I'll help you learn it.</div>
                 <div class="chips">
                     <button class="chip" onclick="suggest('Explain photosynthesis','explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain photosynthesis</button>
-                    <button class="chip" onclick="suggest('World War 2 summary','summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>World War 2 summary</button>
-                    <button class="chip" onclick="suggest('Python loops quiz','mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ on Python loops</button>
+                    <button class="chip" onclick="suggest('World War 2 summary','summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>WW2 summary</button>
+                    <button class="chip" onclick="suggest('Python loops quiz','mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ: Python loops</button>
                     <button class="chip" onclick="suggest('Binary search in Python','code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Binary search code</button>
-                    <button class="chip" onclick="suggest('The Earth is flat','factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact check: Earth is flat</button>
+                    <button class="chip" onclick="suggest('The Earth is flat','factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact: Earth is flat?</button>
                     <button class="chip" onclick="suggest('Newton laws of motion','explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Newton's laws</button>
                 </div>
             </div>
@@ -545,7 +638,7 @@
         </div>
     </div>
 
-    <div class="disclaimer">Study Assistant can make mistakes. Verify important information independently.</div>
+    <div class="disclaimer">Study Assistant can make mistakes. Verify important info independently.</div>
 
     <div class="input-area">
         <div class="input-wrap">
@@ -558,14 +651,14 @@
                             onkeydown="onKey(event)"></textarea>
                         <button type="submit" class="send-btn" id="sendBtn">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                            <span>Send</span>
+                            <span class="send-label">Send</span>
                         </button>
                     </div>
                     <div class="mode-bar">
                         <div class="modes">
                             <button type="button" class="mode-btn m-summary active" id="mb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
                             <button type="button" class="mode-btn m-explanation" id="mb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
-                            <button type="button" class="mode-btn m-mcq" id="mb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ Quiz</button>
+                            <button type="button" class="mode-btn m-mcq" id="mb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
                             <button type="button" class="mode-btn m-code" id="mb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
                             <button type="button" class="mode-btn m-factcheck" id="mb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
                         </div>
@@ -656,9 +749,10 @@ function suggest(text,m){
 /* TYPING */
 function onType(el){
     const w=el.value.trim()?el.value.trim().split(/\s+/).length:0;
-    document.getElementById('wc').textContent=w+' word'+(w!==1?'s':'');
+    const wc=document.getElementById('wc');
+    if(wc) wc.textContent=w+' word'+(w!==1?'s':'');
     el.style.height='auto';
-    el.style.height=Math.min(el.scrollHeight,130)+'px';
+    el.style.height=Math.min(el.scrollHeight,120)+'px';
 }
 function onKey(e){
     if(e.ctrlKey&&e.key==='Enter'){e.preventDefault();document.getElementById('mainForm').requestSubmit();}
@@ -667,7 +761,7 @@ function onKey(e){
 /* SUBMIT */
 function onSubmit(){
     const btn=document.getElementById('sendBtn');
-    btn.innerHTML=`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Thinking…</span>`;
+    btn.innerHTML=`<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
     btn.style.opacity='.75';btn.style.pointerEvents='none';
     const tr=document.getElementById('typingRow');
     if(tr) tr.style.display='flex';
