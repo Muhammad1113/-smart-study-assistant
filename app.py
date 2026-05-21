@@ -246,7 +246,7 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM history WHERE id=? AND user_id=?', (id, session['user_id']))
     db.commit()
-    db.close()`
+    db.close()
     return redirect(url_for('dashboard'))
 
 @app.route('/logout')
