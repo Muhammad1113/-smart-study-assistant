@@ -215,6 +215,32 @@
         .eye-l { animation: blink 4s ease-in-out infinite; transform-origin: 74px 78px; }
         .eye-r { animation: blink 4s .15s ease-in-out infinite; transform-origin: 106px 78px; }
 
+        /* MODE BAR WRAP — sits above input area */
+        .mode-bar-wrap {
+            flex-shrink: 0;
+            background: var(--chat-bg);
+            border-top: 1px solid var(--border);
+            padding: 6px 1.25rem 6px;
+        }
+        .mode-bar-wrap .mode-bar {
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+        .mode-bar-wrap .modes {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .mode-bar-wrap .modes::-webkit-scrollbar { display: none; }
+
+        /* Remove old mode-bar from inside input-box */
+        .mode-bar { display: none; }
+
         /* OVERLAY */
         .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 15; }
         .overlay.show { display: block; }
@@ -275,74 +301,39 @@
 
             .disclaimer { font-size: 10px; padding: 3px .75rem; flex-shrink: 0; }
 
-            /* ── BOTTOM INPUT BAR ── */
-            /* Mode buttons row */
+            /* Mode bar strip on mobile */
+            .mode-bar-wrap {
+                padding: 5px 8px 5px;
+                flex-shrink: 0;
+            }
+            .mode-bar-wrap .mode-bar {
+                max-width: 100%;
+                gap: 5px;
+            }
+            .mode-bar-wrap .mode-btn { font-size: 11px; padding: 4px 9px; gap: 3px; }
+            .input-meta { display: none; }
+
+            /* INPUT AREA — only textarea + send */
             .input-area {
                 flex-shrink: 0;
                 background: var(--chat-bg);
-                border-top: 1px solid var(--border);
-                padding: 0;
+                padding: 6px 10px;
+                padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
             }
-
-            /* Mode buttons on top */
-            .mode-bar {
-                display: flex;
-                margin: 0;
-                padding: 6px 10px 5px;
-                border-top: none;
-                border-bottom: 1px solid var(--border);
-                gap: 5px;
-                background: var(--chat-bg);
-            }
-            .modes {
-                display: flex;
-                overflow-x: auto;
-                gap: 5px;
-                scrollbar-width: none;
-                -webkit-overflow-scrolling: touch;
-            }
-            .modes::-webkit-scrollbar { display: none; }
-            .mode-btn { font-size: 11px; padding: 4px 9px; gap: 3px; }
-            .input-meta { display: none; }
-
-            /* Textarea row below mode buttons */
-            .input-wrap {
-                padding: 7px 10px;
-                padding-bottom: calc(7px + env(safe-area-inset-bottom, 0px));
-            }
-            .input-box {
-                padding: 7px 10px;
-                border-radius: 12px;
-                background: var(--surface);
-                border: 1.5px solid var(--border);
-            }
-            .input-box:focus-within {
-                border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(79,70,229,.08);
-            }
-            .input-row {
-                display: flex;
-                gap: 8px;
-                align-items: center;
-            }
+            .input-wrap { width: 100%; margin: 0; }
+            .input-box { padding: 8px 10px; border-radius: 12px; }
+            .input-row { display: flex; gap: 8px; align-items: center; }
             .input-box textarea {
                 font-size: 16px;
-                min-height: 40px;
+                min-height: 42px;
                 max-height: 90px;
                 line-height: 1.5;
-                flex: 1;
-                background: transparent;
-                border: none;
-                outline: none;
-                color: var(--text);
-                resize: none;
-                font-family: 'DM Sans', sans-serif;
             }
             .send-btn {
-                padding: 10px 12px;
+                padding: 11px 13px;
                 border-radius: 9px;
                 flex-shrink: 0;
-                min-width: 44px;
+                min-width: 46px;
                 justify-content: center;
             }
             .send-btn .send-label { display: none; }
@@ -549,6 +540,21 @@
 
     <div class="disclaimer">Study Assistant can make mistakes. Verify important info independently.</div>
 
+    <div class="mode-bar-wrap">
+        <div class="mode-bar">
+            <div class="modes">
+                <button type="button" class="mode-btn m-summary active" id="mb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
+                <button type="button" class="mode-btn m-explanation" id="mb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
+                <button type="button" class="mode-btn m-mcq" id="mb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
+                <button type="button" class="mode-btn m-code" id="mb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
+                <button type="button" class="mode-btn m-factcheck" id="mb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
+            </div>
+            <div class="input-meta">
+                <span class="wc" id="wc">0 words</span>
+                <span class="sc">Ctrl+Enter</span>
+            </div>
+        </div>
+    </div>
     <div class="input-area">
         <div class="input-wrap">
             <form method="POST" id="mainForm" onsubmit="onSubmit()">
@@ -562,19 +568,6 @@
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                             <span class="send-label">Send</span>
                         </button>
-                    </div>
-                </div>
-                <div class="mode-bar">
-                    <div class="modes">
-                        <button type="button" class="mode-btn m-summary active" id="mb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
-                        <button type="button" class="mode-btn m-explanation" id="mb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
-                        <button type="button" class="mode-btn m-mcq" id="mb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
-                        <button type="button" class="mode-btn m-code" id="mb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
-                        <button type="button" class="mode-btn m-factcheck" id="mb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
-                    </div>
-                    <div class="input-meta">
-                        <span class="wc" id="wc">0 words</span>
-                        <span class="sc">Ctrl+Enter</span>
                     </div>
                 </div>
                 <input type="hidden" name="output_type" id="otype" value="summary">
