@@ -399,23 +399,34 @@
             /* Disclaimer */
             .disclaimer { font-size: 10px; padding: 3px .75rem; }
 
-            /* Input area — part of flex flow, not fixed */
+            /* Input area */
             .input-area {
-                padding: 6px .75rem calc(10px + env(safe-area-inset-bottom));
+                padding: 6px .75rem 8px;
+                padding-bottom: calc(8px + env(safe-area-inset-bottom));
                 flex-shrink: 0;
+                background: var(--chat-bg);
+                border-top: 1px solid var(--border);
             }
 
             /* Input box */
             .input-box { padding: 8px 10px; border-radius: 12px; }
-            .input-box textarea { font-size: 14px; min-height: 38px; max-height: 100px; }
+            .input-box textarea {
+                font-size: 16px;
+                min-height: 42px;
+                max-height: 90px;
+                line-height: 1.5;
+            }
 
             /* Send button — icon only on mobile */
-            .send-btn { padding: 10px 12px; border-radius: 10px; }
+            .send-btn { padding: 11px 13px; border-radius: 10px; min-width: 46px; justify-content: center; }
             .send-btn .send-label { display: none; }
 
-            /* Mode bar */
-            .mode-bar { margin-top: 7px; padding-top: 7px; }
-            .mode-btn { font-size: 11px; padding: 5px 9px; gap: 4px; }
+            /* Mode bar — scrollable, compact */
+            .mode-bar { margin-top: 6px; padding-top: 6px; }
+            .modes { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .modes::-webkit-scrollbar { display: none; }
+            .mode-btn { font-size: 11px; padding: 4px 9px; gap: 3px; white-space: nowrap; flex-shrink: 0; }
+            .input-meta { display: none; }
 
             /* Hide word count and shortcut */
             .wc, .sc { display: none; }
