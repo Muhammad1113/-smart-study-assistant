@@ -2,142 +2,71 @@
 <html data-theme="light">
 <head>
     <title>Study Assistant — Qasim</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --bg:            #f4f4f0;
-            --sidebar:       #fafaf8;
-            --chat-bg:       #ffffff;
-            --surface:       #f0f0ec;
-            --border:        #e4e4de;
-            --border2:       #d0d0c8;
-            --text:          #18181a;
-            --text2:         #52525a;
-            --text3:         #8888a0;
-            --accent:        #4f46e5;
-            --accent2:       #6d64f0;
-            --accent-dim:    #eeedfb;
-            --teal:          #0f766e;
-            --teal-dim:      #ccfbf1;
-            --amber:         #b45309;
-            --amber-dim:     #fef3c7;
-            --rose:          #be123c;
-            --rose-dim:      #ffe4e6;
-            --violet:        #7c3aed;
-            --violet-dim:    #ede9fe;
-            --code-bg:       #13111a;
-            --code-text:     #e2e0fa;
-            --sidebar-w:     268px;
-            --nav-h:         54px;
-            --input-h:       130px;
+            --bg: #f4f4f0; --sidebar: #fafaf8; --chat-bg: #ffffff;
+            --surface: #f0f0ec; --border: #e4e4de; --border2: #d0d0c8;
+            --text: #18181a; --text2: #52525a; --text3: #8888a0;
+            --accent: #4f46e5; --accent2: #6d64f0; --accent-dim: #eeedfb;
+            --teal: #0f766e; --teal-dim: #ccfbf1;
+            --amber: #b45309; --amber-dim: #fef3c7;
+            --rose: #be123c; --rose-dim: #ffe4e6;
+            --violet: #7c3aed; --violet-dim: #ede9fe;
+            --code-bg: #13111a; --code-text: #e2e0fa;
+            --sidebar-w: 268px; --nav-h: 54px;
         }
         [data-theme="dark"] {
-            --bg:            #141416;
-            --sidebar:       #0f0f11;
-            --chat-bg:       #141416;
-            --surface:       #1c1c20;
-            --border:        #2a2a32;
-            --border2:       #38383e;
-            --text:          #f0f0f4;
-            --text2:         #a0a0b4;
-            --text3:         #60607a;
-            --accent:        #7068f4;
-            --accent2:       #8880f8;
-            --accent-dim:    #1e1b3a;
-            --teal:          #2dd4bf;
-            --teal-dim:      #0a2e2c;
-            --amber:         #fbbf24;
-            --amber-dim:     #2e1e04;
-            --rose:          #fb7185;
-            --rose-dim:      #2e0814;
-            --violet:        #a78bfa;
-            --violet-dim:    #1e1438;
-            --code-bg:       #0d0c14;
-            --code-text:     #ddd8ff;
+            --bg: #141416; --sidebar: #0f0f11; --chat-bg: #141416;
+            --surface: #1c1c20; --border: #2a2a32; --border2: #38383e;
+            --text: #f0f0f4; --text2: #a0a0b4; --text3: #60607a;
+            --accent: #7068f4; --accent2: #8880f8; --accent-dim: #1e1b3a;
+            --teal: #2dd4bf; --teal-dim: #0a2e2c;
+            --amber: #fbbf24; --amber-dim: #2e1e04;
+            --rose: #fb7185; --rose-dim: #2e0814;
+            --violet: #a78bfa; --violet-dim: #1e1438;
+            --code-bg: #0d0c14; --code-text: #ddd8ff;
         }
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
-
+        /* ── BASE ── */
+        html { height: 100%; }
         body {
             font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
+            background: var(--bg); color: var(--text);
+            height: 100%; display: flex; overflow: hidden;
             transition: background .25s, color .25s;
         }
-
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 
-        /* ══════════════════════════════
-           SIDEBAR
-        ══════════════════════════════ */
+        /* ── SIDEBAR ── */
         .sidebar {
-            width: var(--sidebar-w);
-            background: var(--sidebar);
+            width: var(--sidebar-w); background: var(--sidebar);
             border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            height: 100vh;
-            transition: background .25s;
-            z-index: 20;
+            display: flex; flex-direction: column; flex-shrink: 0;
+            height: 100vh; z-index: 20;
         }
-
-        .brand {
-            display: flex; align-items: center; gap: 10px;
-            padding: 16px 16px 10px;
-            flex-shrink: 0;
-        }
-        .brand-mark {
-            width: 32px; height: 32px;
-            background: var(--accent);
-            border-radius: 9px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
+        .brand { display: flex; align-items: center; gap: 10px; padding: 16px 16px 10px; flex-shrink: 0; }
+        .brand-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .brand-mark svg { width: 16px; height: 16px; color: white; }
-        .brand-name {
-            font-family: 'Bricolage Grotesque', sans-serif;
-            font-size: 14px; font-weight: 700;
-            color: var(--text);
-        }
-        .btn-new {
-            display: flex; align-items: center; gap: 8px;
-            margin: 0 10px 8px;
-            padding: 9px 14px;
-            background: #0f766e;
-            color: #fff;
-            border: none; border-radius: 10px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 13px; font-weight: 600;
-            transition: background .18s, transform .15s;
-            flex-shrink: 0;
-        }
-        .btn-new:hover { background: var(--accent2); transform: translateY(-1px); }
+        .brand-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); }
+        .btn-new { display: flex; align-items: center; gap: 8px; margin: 0 10px 8px; padding: 9px 14px; background: #0f766e; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; transition: background .18s; flex-shrink: 0; }
+        .btn-new:hover { background: var(--accent2); }
         .btn-new svg { width: 14px; height: 14px; flex-shrink: 0; }
-
         .sb-search { position: relative; margin: 0 10px 8px; flex-shrink: 0; }
         .sb-search svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--text3); pointer-events: none; }
-        .sb-search input { width: 100%; padding: 7px 10px 7px 30px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .2s; }
+        .sb-search input { width: 100%; padding: 7px 10px 7px 30px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 12px; color: var(--text); font-family: 'DM Sans', sans-serif; outline: none; }
         .sb-search input:focus { border-color: var(--accent); }
         .sb-search input::placeholder { color: var(--text3); }
-
         .sb-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 8px 16px 4px; flex-shrink: 0; }
         .sb-list { flex: 1; overflow-y: auto; padding: 0 6px 6px; }
-
         .sb-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; cursor: pointer; text-decoration: none; color: var(--text); transition: background .15s; margin-bottom: 1px; position: relative; }
-        .sb-item:hover { background: var(--accent-dim); }
-        .sb-item.active { background: var(--accent-dim); }
+        .sb-item:hover, .sb-item.active { background: var(--accent-dim); }
         .sb-item-ic { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .sb-item-ic svg { width: 13px; height: 13px; }
         .ic-summary { background: var(--accent-dim); color: var(--accent); }
@@ -145,7 +74,7 @@
         .ic-mcq { background: var(--amber-dim); color: var(--amber); }
         .ic-code { background: var(--violet-dim); color: var(--violet); }
         .ic-factcheck { background: var(--rose-dim); color: var(--rose); }
-        .sb-item-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+        .sb-item-name { font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
         .sb-del { opacity: 0; flex-shrink: 0; width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--text3); transition: all .15s; }
         .sb-del svg { width: 12px; height: 12px; }
         .sb-item:hover .sb-del { opacity: 1; }
@@ -153,7 +82,6 @@
         .sb-empty { text-align: center; padding: 2rem 1rem; color: var(--text3); font-size: 12px; }
         .no-results { display: none; text-align: center; padding: 1rem; color: var(--text3); font-size: 12px; }
         .no-results.show { display: block; }
-
         .sb-footer { border-top: 1px solid var(--border); padding: 10px; flex-shrink: 0; }
         .sb-user { display: flex; align-items: center; gap: 9px; padding: 7px 8px; border-radius: 9px; }
         .sb-av { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -165,58 +93,31 @@
         .btn-logout svg { width: 12px; height: 12px; }
         .btn-logout:hover { background: var(--rose-dim); color: var(--rose); border-color: var(--rose); }
 
-        /* ══════════════════════════════
-           MAIN AREA
-        ══════════════════════════════ */
-        .main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-            background: var(--chat-bg);
-            transition: background .25s;
-            min-width: 0;
-        }
-
-        .topbar {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 1.25rem;
-            height: var(--nav-h);
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-            background: var(--chat-bg);
-            transition: background .25s;
-        }
+        /* ── MAIN ── */
+        .main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: var(--chat-bg); min-width: 0; }
+        .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 1.25rem; height: var(--nav-h); border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--chat-bg); }
         .topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
-        .topbar-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .topbar-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .menu-btn { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; color: var(--text); flex-shrink: 0; }
         .menu-btn svg { width: 18px; height: 18px; }
         .topbar-right { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
-        .btn-clear { display: flex; align-items: center; gap: 5px; font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--text2); background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: all .15s; white-space: nowrap; }
+        .btn-clear { display: flex; align-items: center; gap: 5px; font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--text2); background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: all .15s; }
         .btn-clear svg { width: 13px; height: 13px; }
         .btn-clear:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-dim); }
 
-        /* ══════════════════════════════
-           CHAT AREA
-        ══════════════════════════════ */
-        .chat-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem 1.25rem 1rem;
-            -webkit-overflow-scrolling: touch;
-        }
+        /* ── CHAT AREA ── */
+        .chat-area { flex: 1; overflow-y: auto; padding: 1.5rem 1.25rem 1rem; -webkit-overflow-scrolling: touch; }
         .chat-inner { max-width: 780px; margin: 0 auto; }
 
-        /* EMPTY STATE */
+        /* EMPTY */
         .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; gap: 14px; }
         .empty-av { width: 72px; }
-        .empty-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
+        .empty-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 700; }
         .empty-sub { font-size: 13px; color: var(--text2); max-width: 380px; line-height: 1.65; }
         .chips { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; margin-top: 6px; }
         .chip { display: flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; color: var(--text2); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
         .chip svg { width: 13px; height: 13px; flex-shrink: 0; }
-        .chip:hover, .chip:active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+        .chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 
         /* MESSAGES */
         @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
@@ -226,43 +127,39 @@
         .msg-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .65; margin-bottom: 4px; }
         .msg-tag svg { width: 9px; height: 9px; }
         .msg-ai { display: flex; gap: 11px; align-items: flex-start; }
-        .ai-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-dim); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; overflow: hidden; }
+        .ai-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--accent-dim); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
         .ai-body { flex: 1; min-width: 0; }
         .ai-label { font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
         .ai-label span { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; display: inline-block; }
         .ai-bub { background: var(--surface); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; padding: 16px 18px; font-size: 13.5px; line-height: 1.85; color: var(--text); word-break: break-word; }
-        .ai-bub h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin: 14px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-        .ai-bub h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); margin: 12px 0 5px; }
+        .ai-bub h2 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700; margin: 14px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+        .ai-bub h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700; margin: 12px 0 5px; }
         .ai-bub p { margin-bottom: 10px; }
         .ai-bub p:last-child { margin-bottom: 0; }
-        .ai-bub strong { font-weight: 600; color: var(--text); }
+        .ai-bub strong { font-weight: 600; }
         .ai-bub em { font-style: italic; color: var(--text2); }
         .ai-bub ul, .ai-bub ol { padding-left: 20px; margin-bottom: 10px; }
         .ai-bub li { margin-bottom: 5px; line-height: 1.65; }
-        .ai-bub code { background: var(--code-bg); color: var(--code-text); padding: 2px 6px; border-radius: 5px; font-size: 12px; font-family: 'JetBrains Mono','Courier New',monospace; }
+        .ai-bub code { background: var(--code-bg); color: var(--code-text); padding: 2px 6px; border-radius: 5px; font-size: 12px; font-family: monospace; }
         .code-block { background: var(--code-bg); border-radius: 10px; overflow: hidden; margin: 12px 0; border: 1px solid #2a2840; }
         .code-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: #1a1828; border-bottom: 1px solid #2a2840; }
         .code-lang { font-size: 10px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .06em; }
         .code-copy { font-size: 11px; color: #888; cursor: pointer; display: flex; align-items: center; gap: 4px; border: none; background: none; font-family: 'DM Sans',sans-serif; transition: color .15s; padding: 0; }
-        .code-copy:hover { color: #bbb; }
-        .code-copy svg { width: 12px; height: 12px; }
-        .code-block pre { padding: 14px; overflow-x: auto; margin: 0; color: var(--code-text); font-size: 12.5px; font-family: 'JetBrains Mono','Courier New',monospace; line-height: 1.65; }
-        .code-block pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+        .code-block pre { padding: 14px; overflow-x: auto; margin: 0; color: var(--code-text); font-size: 12.5px; font-family: monospace; line-height: 1.65; }
+        .code-block pre code { background: none; padding: 0; color: inherit; }
         .steps { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
-        .step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; background: var(--chat-bg); border-radius: 10px; border: 1px solid var(--border); transition: border-color .15s; }
-        .step:hover { border-color: var(--accent); }
-        .step-n { width: 24px; height: 24px; background: var(--accent); color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-        .step-t { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
-        .step-d { font-size: 12px; color: var(--text2); line-height: 1.5; }
+        .step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; background: var(--chat-bg); border-radius: 10px; border: 1px solid var(--border); }
+        .step-n { width: 24px; height: 24px; background: var(--accent); color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .step-t { font-weight: 600; font-size: 13px; }
         .mcq-set { display: flex; flex-direction: column; gap: 14px; margin: 8px 0; }
         .mcq-card { background: var(--chat-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
         .mcq-q { padding: 12px 14px; font-size: 13px; font-weight: 600; border-bottom: 1px solid var(--border); background: var(--surface); }
         .mcq-q-num { font-size: 10px; font-weight: 700; color: var(--amber); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 3px; }
         .mcq-opts { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
         .mcq-opt { display: flex; align-items: center; gap: 9px; padding: 10px 11px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 12.5px; transition: all .15s; }
-        .mcq-opt:hover, .mcq-opt:active { border-color: var(--accent); background: var(--accent-dim); }
+        .mcq-opt:hover { border-color: var(--accent); background: var(--accent-dim); }
         .mcq-opt.revealed-correct { border-color: var(--teal); background: var(--teal-dim); color: var(--teal); }
-        .mcq-opt.revealed-wrong { border-color: var(--border); opacity: .5; }
+        .mcq-opt.revealed-wrong { opacity: .5; }
         .opt-l { width: 22px; height: 22px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; color: var(--text2); }
         .mcq-opt.revealed-correct .opt-l { background: var(--teal); color: white; }
         .verdict-box { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; margin-bottom: 12px; font-weight: 700; font-size: 14px; }
@@ -278,230 +175,184 @@
         .typing.show { display: flex; }
         .td { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: tdots 1s infinite; }
         .td:nth-child(2){animation-delay:.15s} .td:nth-child(3){animation-delay:.3s}
-
         .msg-foot { display: flex; align-items: center; gap: 12px; margin-top: 7px; }
-        .foot-btn { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); cursor: pointer; background: none; border: none; font-family: 'DM Sans',sans-serif; transition: color .15s; padding: 4px 0; }
-        .foot-btn svg { width: 12px; height: 12px; }
+        .foot-btn { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text3); cursor: pointer; background: none; border: none; font-family: 'DM Sans',sans-serif; padding: 4px 0; }
         .foot-btn:hover { color: var(--accent); }
+
+        /* DISCLAIMER */
         .disclaimer { font-size: 11px; color: var(--text3); text-align: center; padding: 4px 1rem; flex-shrink: 0; }
 
-        /* ══════════════════════════════
-           INPUT AREA
-        ══════════════════════════════ */
-        .input-area {
-            flex-shrink: 0;
-            padding: 8px 1.25rem 12px;
-            background: var(--chat-bg);
-            border-top: 1px solid var(--border);
-            transition: background .25s;
-        }
+        /* ── INPUT AREA (DESKTOP) ── */
+        .input-area { flex-shrink: 0; padding: 8px 1.25rem 14px; background: var(--chat-bg); border-top: 1px solid var(--border); }
         .input-wrap { max-width: 780px; margin: 0 auto; }
         .input-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; padding: 10px 12px; transition: border-color .2s, box-shadow .2s; }
         .input-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,70,229,.08); }
         .input-row { display: flex; gap: 9px; align-items: flex-end; }
-        .input-box textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-family: 'DM Sans',sans-serif; font-size: 14px; line-height: 1.6; resize: none; min-height: 40px; max-height: 120px; }
+        .input-box textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-family: 'DM Sans',sans-serif; font-size: 14px; line-height: 1.6; resize: none; min-height: 44px; max-height: 130px; }
         .input-box textarea::placeholder { color: var(--text3); }
-        .send-btn { flex-shrink: 0; display: flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .18s; white-space: nowrap; }
-        .send-btn:hover { background: var(--accent2); transform: translateY(-1px); }
-        .send-btn:active { transform: scale(.97); }
+        .send-btn { flex-shrink: 0; display: flex; align-items: center; gap: 6px; background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-family: 'DM Sans',sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .18s; white-space: nowrap; }
+        .send-btn:hover { background: var(--accent2); }
         .send-btn svg { width: 14px; height: 14px; }
-        .mode-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); gap: 6px; }
-        .modes { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .mode-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); gap: 6px; }
+        .modes { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
         .modes::-webkit-scrollbar { display: none; }
-        .mode-btn { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border); background: transparent; font-size: 11.5px; font-weight: 500; color: var(--text2); cursor: pointer; font-family: 'DM Sans',sans-serif; transition: all .15s; white-space: nowrap; flex-shrink: 0; }
+        .mode-btn { display: flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border); background: transparent; font-size: 11.5px; font-weight: 500; color: var(--text2); cursor: pointer; font-family: 'DM Sans',sans-serif; transition: all .15s; white-space: nowrap; flex-shrink: 0; }
         .mode-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
-        .mode-btn:hover, .mode-btn:active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+        .mode-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
         .mode-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); font-weight: 600; }
         .mode-btn.m-explanation.active,.mode-btn.m-explanation:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
         .mode-btn.m-mcq.active,.mode-btn.m-mcq:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-dim); }
         .mode-btn.m-code.active,.mode-btn.m-code:hover { border-color: var(--violet); color: var(--violet); background: var(--violet-dim); }
         .mode-btn.m-factcheck.active,.mode-btn.m-factcheck:hover { border-color: var(--rose); color: var(--rose); background: var(--rose-dim); }
         .input-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .wc { font-size: 10px; color: var(--text3); }
-        .sc { font-size: 10px; color: var(--text3); }
+        .wc, .sc { font-size: 10px; color: var(--text3); }
 
-        /* AVATAR ANIMATIONS */
+        /* AVATAR */
         @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
         @keyframes blink { 0%,84%,100%{transform:scaleY(1)} 88%{transform:scaleY(.08)} }
-        @keyframes wave  { 0%,100%{transform:rotate(0)} 35%{transform:rotate(26deg)} 70%{transform:rotate(-8deg)} }
+        @keyframes wave { 0%,100%{transform:rotate(0)} 35%{transform:rotate(26deg)} 70%{transform:rotate(-8deg)} }
         .av-float { animation: float 3.6s ease-in-out infinite; }
         .eye-l { animation: blink 4s ease-in-out infinite; transform-origin: 74px 78px; }
         .eye-r { animation: blink 4s .15s ease-in-out infinite; transform-origin: 106px 78px; }
 
         /* OVERLAY */
-        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 15; backdrop-filter: blur(2px); }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 15; }
         .overlay.show { display: block; }
 
-        /* MOBILE TOP MODE BAR - hidden on desktop */
-        .mobile-modes {
-            display: none;
-        }
-
         /* ══════════════════════════════
-           TABLET (768px - 1024px)
-        ══════════════════════════════ */
-        @media (max-width: 1024px) {
-            :root { --sidebar-w: 230px; }
-        }
-
-        /* ══════════════════════════════
-           MOBILE (max 768px)
+           MOBILE — max 768px
+           KEY IDEA: fixed bottom bar
         ══════════════════════════════ */
         @media (max-width: 768px) {
-            /* Prevent iOS body scroll when sidebar open */
-            body.sidebar-open { overflow: hidden; position: fixed; width: 100%; }
 
-            /* Sidebar: slide-in drawer */
+            /* Sidebar drawer */
             .sidebar {
-                position: fixed;
-                top: 0; left: 0;
-                height: 100%;
-                width: 80vw;
-                max-width: 290px;
+                position: fixed; top: 0; left: 0;
+                height: 100%; width: 82vw; max-width: 300px;
                 transform: translateX(-100%);
-                transition: transform .28s cubic-bezier(.4,0,.2,1), background .25s;
+                transition: transform .28s ease;
                 z-index: 30;
-                box-shadow: 4px 0 24px rgba(0,0,0,.15);
+                box-shadow: 4px 0 20px rgba(0,0,0,.2);
             }
             .sidebar.open { transform: translateX(0); }
-
-            /* Show hamburger */
             .menu-btn { display: flex !important; }
+            .sb-del { opacity: 1; }
 
-            /* Main: full width, flex column, fixed height */
+            /* Main column — full screen */
             .main {
-                width: 100%;
+                width: 100vw;
                 height: 100vh;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
             }
 
             /* Topbar */
-            .topbar { padding: 0 .75rem; height: 50px; }
+            .topbar { padding: 0 .75rem; height: 50px; flex-shrink: 0; }
             .topbar-title { font-size: 13px; }
 
-            /* Chat scrollable area */
+            /* Chat scrolls freely, leaves room for bottom bar */
             .chat-area {
                 flex: 1;
                 overflow-y: auto;
-                padding: 1rem .75rem .75rem;
+                -webkit-overflow-scrolling: touch;
+                padding: .75rem .75rem 1rem;
             }
 
+            /* Empty state */
+            .empty { min-height: 40vh; gap: 10px; padding: .75rem; }
+            .empty-av { width: 55px; }
+            .empty-title { font-size: 1.2rem; }
+            .empty-sub { font-size: 12px; max-width: 280px; }
+            .chips { gap: 5px; }
+            .chip { font-size: 11px; padding: 6px 10px; }
+
             /* Messages */
-            .msg-user-bub { max-width: 85%; font-size: 13px; padding: 10px 14px; }
-            .ai-bub { font-size: 13px; padding: 12px 13px; line-height: 1.75; }
+            .msg-user-bub { max-width: 88%; font-size: 13px; padding: 9px 13px; }
+            .ai-bub { font-size: 13px; padding: 11px 13px; }
             .ai-icon { width: 30px; height: 30px; }
             .msg-ai { gap: 8px; }
 
-            /* Empty state */
-            .empty { min-height: 50vh; gap: 10px; padding: 1rem; }
-            .empty-av { width: 58px; }
-            .empty-title { font-size: 1.25rem; }
-            .empty-sub { font-size: 12px; max-width: 280px; }
-            .chips { gap: 6px; }
-            .chip { font-size: 11.5px; padding: 7px 12px; }
+            .disclaimer { font-size: 10px; padding: 3px .75rem; flex-shrink: 0; }
 
-            /* Disclaimer */
-            .disclaimer { font-size: 10px; padding: 3px .75rem; }
+            /* ── BOTTOM INPUT BAR ── */
+            /* Mode buttons row */
+            .input-area {
+                flex-shrink: 0;
+                background: var(--chat-bg);
+                border-top: 1px solid var(--border);
+                padding: 0;
+            }
 
-            /* Mobile mode bar above input */
-            .mobile-modes {
-                display: flex !important;
+            /* Mode buttons on top */
+            .mode-bar {
+                display: flex;
+                margin: 0;
+                padding: 6px 10px 5px;
+                border-top: none;
+                border-bottom: 1px solid var(--border);
+                gap: 5px;
+                background: var(--chat-bg);
+            }
+            .modes {
+                display: flex;
                 overflow-x: auto;
                 gap: 5px;
-                padding: 5px 10px;
-                background: var(--chat-bg);
-                border-top: 1px solid var(--border);
-                flex-shrink: 0;
-                -webkit-overflow-scrolling: touch;
                 scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
             }
-            .mobile-modes::-webkit-scrollbar { display: none; }
-            .mobile-modes .mode-btn {
-                font-size: 11px;
-                padding: 5px 10px;
-                gap: 4px;
-                white-space: nowrap;
-                flex-shrink: 0;
-            }
+            .modes::-webkit-scrollbar { display: none; }
+            .mode-btn { font-size: 11px; padding: 4px 9px; gap: 3px; }
+            .input-meta { display: none; }
 
-            /* Input area */
-            .input-area {
-                display: block !important;
-                flex-shrink: 0;
-                padding: 6px 10px;
-                padding-bottom: calc(8px + env(safe-area-inset-bottom));
-                background: var(--chat-bg);
-                border-top: 1px solid var(--border);
+            /* Textarea row below mode buttons */
+            .input-wrap {
+                padding: 7px 10px;
+                padding-bottom: calc(7px + env(safe-area-inset-bottom, 0px));
             }
-
-            /* Input wrap and box */
-            .input-wrap { width: 100%; }
             .input-box {
-                display: block !important;
-                padding: 8px 10px;
+                padding: 7px 10px;
                 border-radius: 12px;
                 background: var(--surface);
                 border: 1.5px solid var(--border);
             }
+            .input-box:focus-within {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 3px rgba(79,70,229,.08);
+            }
             .input-row {
-                display: flex !important;
+                display: flex;
                 gap: 8px;
                 align-items: center;
             }
             .input-box textarea {
-                display: block !important;
-                flex: 1;
                 font-size: 16px;
-                min-height: 44px;
-                max-height: 88px;
+                min-height: 40px;
+                max-height: 90px;
                 line-height: 1.5;
-                width: 100%;
+                flex: 1;
                 background: transparent;
                 border: none;
                 outline: none;
                 color: var(--text);
-                font-family: 'DM Sans', sans-serif;
                 resize: none;
+                font-family: 'DM Sans', sans-serif;
             }
-
-            /* Hide mode-bar INSIDE input box */
-            .mode-bar { display: none !important; }
-
-            /* Send button */
             .send-btn {
-                display: flex !important;
-                padding: 11px 13px;
-                border-radius: 10px;
-                min-width: 48px;
-                justify-content: center;
-                align-items: center;
+                padding: 10px 12px;
+                border-radius: 9px;
                 flex-shrink: 0;
+                min-width: 44px;
+                justify-content: center;
             }
             .send-btn .send-label { display: none; }
-
-            /* Hide word count and shortcut */
             .wc, .sc { display: none; }
-
-            /* Sidebar delete always visible on touch */
-            .sb-del { opacity: 1; }
-
-            /* MCQ options bigger tap target */
-            .mcq-opt { padding: 12px 11px; }
         }
 
-        /* ══════════════════════════════
-           SMALL PHONES (max 400px)
-        ══════════════════════════════ */
         @media (max-width: 400px) {
-            .topbar-title { font-size: 12px; }
             .empty-title { font-size: 1.1rem; }
-            .empty-sub { font-size: 11.5px; }
-            .chip { font-size: 11px; padding: 6px 10px; }
-            .mode-btn { font-size: 10.5px; padding: 4px 8px; }
-            .send-btn { padding: 9px 11px; }
-            .ai-bub { font-size: 12.5px; padding: 10px 11px; }
-            .msg-user-bub { font-size: 12.5px; }
+            .chip { font-size: 10.5px; padding: 5px 9px; }
+            .mode-btn { font-size: 10px; padding: 4px 7px; }
         }
     </style>
 </head>
@@ -509,7 +360,6 @@
 
 <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
     <div class="brand">
         <div class="brand-mark">
@@ -517,7 +367,6 @@
         </div>
         <span class="brand-name">Study Assistant</span>
     </div>
-
     <form method="POST" style="margin:0">
         <input type="hidden" name="new_chat" value="1">
         <button type="submit" class="btn-new">
@@ -525,14 +374,11 @@
             New Chat
         </button>
     </form>
-
     <div class="sb-search">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z"/></svg>
         <input type="text" id="sbSearch" placeholder="Search chats..." oninput="searchChats(this.value)">
     </div>
-
     <div class="sb-label">Recent</div>
-
     <div class="sb-list">
         <div class="no-results" id="noRes">No results found</div>
         {% if records %}
@@ -565,12 +411,11 @@
             <div class="sb-empty">No chats yet.<br>Start learning!</div>
         {% endif %}
     </div>
-
     <div class="sb-footer">
         <div class="sb-user">
             <div class="sb-av">{{ session['username'][0].upper() }}</div>
             <span class="sb-uname">{{ session['username'] }}</span>
-            <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">
+            <button class="btn-icon" onclick="toggleTheme()" title="Toggle theme">
                 <svg id="themeIco" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
             </button>
             <a href="/logout" class="btn-logout">
@@ -581,7 +426,6 @@
     </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
     <div class="topbar">
         <div class="topbar-left">
@@ -705,15 +549,6 @@
 
     <div class="disclaimer">Study Assistant can make mistakes. Verify important info independently.</div>
 
-    <!-- Mobile mode buttons (shown above input on small screens) -->
-    <div class="mobile-modes" id="mobileModes">
-        <button type="button" class="mode-btn m-summary active" id="mmb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
-        <button type="button" class="mode-btn m-explanation" id="mmb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
-        <button type="button" class="mode-btn m-mcq" id="mmb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
-        <button type="button" class="mode-btn m-code" id="mmb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
-        <button type="button" class="mode-btn m-factcheck" id="mmb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
-    </div>
-
     <div class="input-area">
         <div class="input-wrap">
             <form method="POST" id="mainForm" onsubmit="onSubmit()">
@@ -728,18 +563,18 @@
                             <span class="send-label">Send</span>
                         </button>
                     </div>
-                    <div class="mode-bar">
-                        <div class="modes">
-                            <button type="button" class="mode-btn m-summary active" id="mb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
-                            <button type="button" class="mode-btn m-explanation" id="mb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
-                            <button type="button" class="mode-btn m-mcq" id="mb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
-                            <button type="button" class="mode-btn m-code" id="mb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
-                            <button type="button" class="mode-btn m-factcheck" id="mb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
-                        </div>
-                        <div class="input-meta">
-                            <span class="wc" id="wc">0 words</span>
-                            <span class="sc">Ctrl+Enter</span>
-                        </div>
+                </div>
+                <div class="mode-bar">
+                    <div class="modes">
+                        <button type="button" class="mode-btn m-summary active" id="mb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
+                        <button type="button" class="mode-btn m-explanation" id="mb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
+                        <button type="button" class="mode-btn m-mcq" id="mb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
+                        <button type="button" class="mode-btn m-code" id="mb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
+                        <button type="button" class="mode-btn m-factcheck" id="mb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
+                    </div>
+                    <div class="input-meta">
+                        <span class="wc" id="wc">0 words</span>
+                        <span class="sc">Ctrl+Enter</span>
                     </div>
                 </div>
                 <input type="hidden" name="output_type" id="otype" value="summary">
