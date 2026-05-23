@@ -332,6 +332,11 @@
         .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 15; backdrop-filter: blur(2px); }
         .overlay.show { display: block; }
 
+        /* MOBILE TOP MODE BAR - hidden on desktop */
+        .mobile-modes {
+            display: none;
+        }
+
         /* ══════════════════════════════
            TABLET (768px - 1024px)
         ══════════════════════════════ */
@@ -399,34 +404,58 @@
             /* Disclaimer */
             .disclaimer { font-size: 10px; padding: 3px .75rem; }
 
-            /* Input area */
-            .input-area {
-                padding: 6px .75rem 8px;
-                padding-bottom: calc(8px + env(safe-area-inset-bottom));
-                flex-shrink: 0;
+            /* Mobile top mode bar */
+            .mobile-modes {
+                display: flex;
+                overflow-x: auto;
+                gap: 5px;
+                padding: 6px .75rem 4px;
                 background: var(--chat-bg);
                 border-top: 1px solid var(--border);
+                flex-shrink: 0;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .mobile-modes::-webkit-scrollbar { display: none; }
+            .mobile-modes .mode-btn {
+                font-size: 11px;
+                padding: 5px 10px;
+                gap: 4px;
+                white-space: nowrap;
+                flex-shrink: 0;
             }
 
-            /* Input box */
-            .input-box { padding: 8px 10px; border-radius: 12px; }
+            /* Input area — ONLY textarea + send button */
+            .input-area {
+                padding: 6px .75rem calc(8px + env(safe-area-inset-bottom));
+                flex-shrink: 0;
+                background: var(--chat-bg);
+            }
+
+            /* Hide mode-bar inside input box on mobile */
+            .mode-bar { display: none; }
+
+            /* Input box — clean, just textarea + button */
+            .input-box {
+                padding: 8px 10px;
+                border-radius: 12px;
+            }
             .input-box textarea {
                 font-size: 16px;
-                min-height: 42px;
-                max-height: 90px;
+                min-height: 44px;
+                max-height: 88px;
                 line-height: 1.5;
             }
 
-            /* Send button — icon only on mobile */
-            .send-btn { padding: 11px 13px; border-radius: 10px; min-width: 46px; justify-content: center; }
+            /* Send button */
+            .send-btn {
+                padding: 11px 13px;
+                border-radius: 10px;
+                min-width: 48px;
+                justify-content: center;
+                align-self: flex-end;
+            }
             .send-btn .send-label { display: none; }
-
-            /* Mode bar — scrollable, compact */
-            .mode-bar { margin-top: 6px; padding-top: 6px; }
-            .modes { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .modes::-webkit-scrollbar { display: none; }
-            .mode-btn { font-size: 11px; padding: 4px 9px; gap: 3px; white-space: nowrap; flex-shrink: 0; }
-            .input-meta { display: none; }
 
             /* Hide word count and shortcut */
             .wc, .sc { display: none; }
@@ -653,6 +682,15 @@
 
     <div class="disclaimer">Study Assistant can make mistakes. Verify important info independently.</div>
 
+    <!-- Mobile mode buttons (shown above input on small screens) -->
+    <div class="mobile-modes" id="mobileModes">
+        <button type="button" class="mode-btn m-summary active" id="mmb-summary" onclick="setMode('summary')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Summarize</button>
+        <button type="button" class="mode-btn m-explanation" id="mmb-explanation" onclick="setMode('explanation')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Explain</button>
+        <button type="button" class="mode-btn m-mcq" id="mmb-mcq" onclick="setMode('mcq')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>MCQ</button>
+        <button type="button" class="mode-btn m-code" id="mmb-code" onclick="setMode('code')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>Code</button>
+        <button type="button" class="mode-btn m-factcheck" id="mmb-factcheck" onclick="setMode('factcheck')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="12" height="12"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fact Check</button>
+    </div>
+
     <div class="input-area">
         <div class="input-wrap">
             <form method="POST" id="mainForm" onsubmit="onSubmit()">
@@ -749,6 +787,9 @@ function setMode(m){
     document.getElementById('otype').value=m;
     document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
     document.getElementById('mb-'+m).classList.add('active');
+    // sync mobile mode bar
+    const mmb=document.getElementById('mmb-'+m);
+    if(mmb) mmb.classList.add('active');
 }
 
 /* SUGGEST */
