@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Register — Study Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -22,6 +23,7 @@
             --coral: #dc2626;
             --coral-light: #fee2e2;
         }
+        html, body { height: 100%; }
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--bg);
@@ -30,7 +32,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 1rem;
         }
         .bg-dots {
             position: fixed; inset: 0;
@@ -44,35 +46,66 @@
             background: var(--white);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 2.5rem;
+            padding: 2rem;
             box-shadow: 0 4px 24px rgba(0,0,0,0.06);
             animation: fadeUp 0.5s ease both;
         }
-        .card-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 2rem; }
-        .logo-mark { width: 30px; height: 30px; background: var(--accent); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white; }
+        .card-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; }
+        .logo-mark { width: 30px; height: 30px; background: var(--accent); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white; flex-shrink: 0; }
         .logo-text { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--muted); }
-        .card-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
-        .card-sub { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
-        .perks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; padding: 12px 14px; background: var(--accent-light); border-radius: 10px; border: 1px solid rgba(80,70,229,0.15); }
-        .perk { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--accent); }
+        .card-title { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.3rem; }
+        .card-sub { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+        .perks { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; padding: 10px 14px; background: var(--accent-light); border-radius: 10px; border: 1px solid rgba(80,70,229,0.15); }
+        .perk { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--accent); }
         .perk-dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
-        .error-box { background: var(--coral-light); border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 14px; margin-bottom: 1.25rem; font-size: 13px; color: var(--coral); }
-        .field { margin-bottom: 1rem; }
-        .field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
-        .field input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+        .error-box { background: var(--coral-light); border: 1px solid #fca5a5; border-radius: 10px; padding: 10px 14px; margin-bottom: 1rem; font-size: 13px; color: var(--coral); }
+        .field { margin-bottom: 0.9rem; }
+        .field label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 5px; }
+        .field input {
+            width: 100%;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
         .field input::placeholder { color: var(--muted2); }
         .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(80,70,229,0.08); }
-        .hint { font-size: 11px; color: var(--muted2); margin-top: 5px; }
-        .btn { width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 10px; padding: 12px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: all 0.2s; }
+        .hint { font-size: 11px; color: var(--muted2); margin-top: 4px; }
+        .btn {
+            width: 100%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
         .btn:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(80,70,229,0.25); }
         .btn:active { transform: scale(0.99); }
-        .divider { display: flex; align-items: center; gap: 12px; margin: 1.5rem 0; }
+        .divider { display: flex; align-items: center; gap: 12px; margin: 1.25rem 0; }
         .divider-line { flex: 1; height: 1px; background: var(--border); }
         .divider-text { font-size: 12px; color: var(--muted); }
         .card-footer { text-align: center; font-size: 13px; color: var(--muted); }
         .card-footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
         .card-footer a:hover { text-decoration: underline; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 480px) {
+            body { padding: 0.75rem; }
+            .card { padding: 1.5rem; border-radius: 16px; }
+            .card-title { font-size: 1.4rem; }
+        }
     </style>
 </head>
 <body>
@@ -95,12 +128,12 @@
     <form method="POST">
         <div class="field">
             <label>Username</label>
-            <input type="text" name="username" placeholder="Choose a username" required autofocus>
+            <input type="text" name="username" placeholder="Choose a username" required autofocus autocomplete="username">
             <p class="hint">Letters and numbers only, no spaces</p>
         </div>
         <div class="field">
             <label>Password</label>
-            <input type="password" name="password" placeholder="Create a password" required>
+            <input type="password" name="password" placeholder="Create a password" required autocomplete="new-password">
             <p class="hint">At least 4 characters recommended</p>
         </div>
         <button type="submit" class="btn">Create Account →</button>
